@@ -24,7 +24,6 @@ def archinstalldisk():
     else:
         print("continuing")
     print("making root and boot partitions")
-
     os.system("parted -s /dev/" + getdisk + " mklabel gpt")
     os.system("parted -s /dev/" + getdisk + " mkpart primary fat32 1MiB 513MiB")
     os.system("parted -s /dev/" + getdisk + " set 1 esp on")
@@ -135,49 +134,72 @@ def archinstalldisk():
     else:
         print("exiting")
         exit()
-    os.system("su " + getusername)
-    print("do you want to install a desktop environment?")
-    getdesktop=input()
-    if getdesktop == "y":
-        print("please select a desktop environment")
-        print("1.kde")
-        print("2.gnome")
-        print("3.xfce")
-        print("4.i3-gaps")
-        getdesktop=input()
-        if getdesktop == "1":
-            os.system("pacman -S plasma-meta")
-        elif getdesktop == "2":
-            os.system("pacman -S gnome")
-        elif getdesktop == "3":
-            os.system("pacman -S xfce4")
-        elif getdesktop == "4":
-            print("flagship")
-            os.system("pacman -S i3-gaps")
+    
+    print("do you want to enable multilib?")
+    getmultilib=input()
+    if getmultilib == "y":
+        os.system("echo [multilib] >> /etc/pacman.conf")
+        os.system("echo Include = /etc/pacman.d/mirrorlist >> /etc/pacman.conf")
     else:
-        print("ok")
-    print("do you want to install a display manager?")
-    getdm=input()
-    if getdm == "y":
-        print("please select a display manager")
-        print("1.sddm")
-        print("2.gdm")
-        print("3.lightdm")
-        getdm=input()
-        if getdm == "1":
-            os.system("pacman -S sddm")
-            os.system("systemctl enable sddm")
-        elif getdm == "2":
-            os.system("pacman -S gdm")
-            os.system("systemctl enable gdm")
-        elif getdm == "3":
-            os.system("pacman -S lightdm")
-            os.system("systemctl enable lightdm")
-    else:
-        print("ok")
+        print("continuing")
+    PKGS=[
+        'zip'                    
+        'zsh'                   
+        'zsh-completions'        
+        'wget'                   
+        'unrar'                  
+        'unzip'                  
+        'bashtop'               
+        'hardinfo'               
+        'neofetch'               
+        'numlockx'              
+        'xfce4-power-manager'
+	    'xfce4-appfinder'
+	    'rofi'
+        'xorg-fonts-type1'
+	    'ttf-liberation'
+	    'ttf-dejavu'
+        'ttf-bitstream-vera'
+        'sdl_ttf'
+        'gsfonts'
+        'font-bh-ttf'
+        'autofs'                
+        'exfat-utils'                          
+        'ntfs-3g'               
+        'terminator'
+        'catfish'               
+        'nemo'                  
+        'variety'               
+        'feh'
+	    'network-manager-applet'
+	    'xfce4-settings-manager'
+	    'scrot'
+	    'xfce4-screenshooter'
+        'lxappearance'
+        'gst-plugins-base'
+        'gst-plugins-good'
+        'gst-plugins-ugly'
+        'gst-plugins-bad'
+        'gst-libav'
+        'obs-studio'               
+        'git'                   
+        'vlc'                   
+        'xfce4-screenshooter'                   
+        'xpdf'                  
+        'vim'   
+        'i3-gaps'
+        'sddm'
+
+
+]
+    os.system("pacman -Syu --noconfirm ",PKGS)  
+    print("enabling sddm")
+    os.system("systemctl enable sddm")  
     print("do you want to install a aur helper?")
     getaur=input()
     if getaur == "y":
+        os.system("su " + getusername)
+        os.system("cd /home/" + getusername)
         print("please select a aur helper")
         print("1.yay")
         print("2.pikaur")
@@ -201,22 +223,62 @@ def archinstalldisk():
     else:
         print("ok") 
 
-    print("do you want to install a browser?")
-    getbrowser=input()
-    if getbrowser == "y":
-        print("please select a browser")
-        print("1.firefox")
-        print("2.google chrome")
-        getbrowser=input()
-        if getbrowser == "1":
-            os.system("pacman -S firefox")
-        elif getbrowser == "2":
-            os.system(getaur + "-S google-chrome")
-    else:
-        print("ok")
+    PKGS1=[
+
+	'visual-studio-code-bin'    
+	'spotify'                   
+    'discord'
+    'telegram-desktop'
+    'zoom'
+	'google-chrome'	    
+	'polybar'
+	'networkmanager-dmenu-git'
+    'arc-gtk-theme'
+    'arc-icon-theme'
+    'papirus-icon-theme'
+    'papirus-folders'
+    'papirus-maia-icon-theme'
+    'papirus-maia-folders'
+    'papirus-maia-git'
+    'papirus-maia-icon-theme-git'
+    'nerd-fonts-iosevka'
+    'ttf-icomoon-feather'
+    'ttf-material-icons-git'
+    'siji-git'
+    'ttf-font-awesome'
+    'ttf-joypixels'
+    'ttf-nerd-fonts-symbols'
+    'ttf-ms-fonts'
+    ]
+    print("installing aur packages and themes")
+    os.system(getaur + " -S --noconfirm " + PKGS1)
+    os.system("exit")
+    print("are you a hacker ?")
+    gethacker=input()
+    if gethacker == "y":
+        print("do you want to install blackarch?")
+        getblackarch=input()
+        if getblackarch == "y":
+            os.system("curl -O https://blackarch.org/strap.sh")
+            os.system("chmod +x strap.sh")
+            os.system("./strap.sh")
+            os.system("pacman -Syu ")
+            print("blackarch repository added")
+            print("do you want to install black arch packages now ?")
+            getblackarch1=input()
+            if getblackarch1 == "y":
+                os.system("pacman -S blackarch")
+                print("blackarch packages installed")
+            else:
+                print("ok")
+        
+
     print("tank you for using my script")
     print("exiting")
-    exit()
+    os.system("exit")
+    os.system("umount -R /mnt")
+    os.system("reboot")
+    
 
     
 
