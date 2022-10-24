@@ -98,7 +98,8 @@ class postchroot:
     def network(self):
         subprocess.call('systemctl', 'enable', 'NetworkManager')
     def wmdeployscript(self):
-        subprocess.call('git', 'clone', )    
+        subprocess.call('chmode +x', '~/Arch-deploy/ArchPost/setup.sh')
+        subprocess.call('sh', '~/Arch-deploy/ArchPost/setup.sh' )    
     def exit(self):
         subprocess.call('exit')
     def umount(self):
