@@ -1,4 +1,7 @@
 import subprocess
+import os
+import sys
+from subprocess import call
 
 class insdisk:
     bootselect = input("Enter the boot partition path: ")
@@ -19,7 +22,7 @@ class insdisk:
         subprocess.call(["swapon", self.swapselect])
 
 class install:
-    def __init__(self):
+    def __init__(self,format,mount,install,postchroot):
         self.format = format()
         self.mount = mount()
         self.install = install()
@@ -94,7 +97,41 @@ class postchroot:
         subprocess.call('echo', '%wheel ALL=(ALL) ALL', '>>', '/etc/sudoers')
     def network(self):
         subprocess.call('systemctl', 'enable', 'NetworkManager')
-    def wmdeployscript(self
-        
-p1=insdisk()
+    def wmdeployscript(self):
+        subprocess.call('git', 'clone', )    
+    def exit(self):
+        subprocess.call('exit')
+    def umount(self):
+        subprocess.call('umount', '-R', '/mnt')
+    def reboot(self):
+        subprocess.call('reboot')  
 
+class main:
+    def __init__(self,insdisk,install,postchroot):
+        self.insdisk = insdisk()
+        self.install = install()
+        self.postchroot = postchroot()
+    def insdisk(self):
+        self.insdisk.format()
+        self.insdisk.mount()
+    def install(self):
+        self.install.install()
+    def postchroot(self):
+        self.postchroot.settime()
+        self.postchroot.hwclock()
+        self.postchroot.locale()
+        self.postchroot.localegen()
+        self.postchroot.localeconf()
+        self.postchroot.hostname()
+        self.postchroot.rootpass()
+        self.postchroot.bootloader()
+        self.postchroot.grubinstall()
+        self.postchroot.grubmkconfig()
+        self.postchroot.useradd()
+        self.postchroot.userpass()
+        self.postchroot.sudoers()
+        self.postchroot.network()
+        self.postchroot.wmdeployscript()
+        self.postchroot.exit()
+        self.postchroot.umount()
+        self.postchroot.reboot()
