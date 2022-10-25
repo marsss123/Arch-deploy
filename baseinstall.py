@@ -22,7 +22,9 @@ class ArchInstall:
         else:
             print("Invalid answer")
             ArchInstall.choose_kernel()
+        #save kernel to variable
         return kernel
+        
 
     def headers():
         kernel = ArchInstall.choose_kernel()
@@ -41,8 +43,10 @@ class ArchInstall:
     def base_system():
         kernel = ArchInstall.choose_kernel()
         kernel_headers = ArchInstall.headers()
+
+        kernel_to_install = kernel + " " + kernel_headers
         print("Installing base system")
-        os.system('pacstrap', '/mnt', 'base' , kernel , 'linux-firmware' ,kernel_headers ,'base-devel','vim','networkmanager')
+        os.system('pacstrap', '/mnt', 'base' , kernel_to_install , 'linux-firmware'  ,'base-devel','vim','networkmanager')
         #create fstab
         os.system('genfstab', '-U', '/mnt', '>>', '/mnt/etc/fstab')
         #chroot
