@@ -27,12 +27,15 @@ class DISKTOINSTALL:
     #get disk from the function above and make user choose which disk to install on
     def choose_disk():
         disks = DISKTOINSTALL.get_disks()
-        print("Choose a disk to install on: ")
-        for i in range(len(disks)):
-            print(str(i) + ": " + disks[i])
-        disk = disks[int(input("Disk: "))]
-        return disk 
-
+        print("Choose disk to install on")
+        for disk in disks:
+            print(disk)
+        disk = input("Disk: ")
+        if disk in disks:
+            return disk
+        else:
+            print("Invalid disk")
+            DISKTOINSTALL.choose_disk()
     #ask user if he wants to make the partitions himself or let the script do it
     def make_partitions():
         print("if you have windows installed on the disk you want to install linux on, you need to make the partitions manually")
