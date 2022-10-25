@@ -75,13 +75,15 @@ class DISKTOINSTALL:
     def make_partitions_manually():
 
         disk = DISKTOINSTALL.choose_disk()
+        disk_name = disk[:-1]
+
         print("Making partitions manually")
         print("Do you want to use cfdisk or fdisk? (c/f)")
         answer = input("Answer: ")
         if answer == "c":
-            os.system("cfdisk " + disk)
+            os.system("cfdisk " + disk_name)
         elif answer == "f":
-            os.system("fdisk " + disk)
+            os.system("fdisk " + disk_name)
         else:
             print("Invalid answer")
             DISKTOINSTALL.make_partitions_manually()
@@ -102,44 +104,49 @@ class DISKTOINSTALL:
     #make partitions automatically using parted and efi
     def make_partitions_automatically_efi():
         disk = DISKTOINSTALL.choose_disk()
+        #save the disk name without the number
+        disk_name = disk[:-1]
         print("Making partitions automatically with efi")
         #ask for swap size 
         print("Enter swap size in GB")
         print("Swap is a partition that is used as virtual memory")
+        
         swap_size = input("Swap size: ")
         #make the partitions
-        os.system("parted " + disk + " mklabel gpt")
-        os.system("parted " + disk + " mkpart primary fat32 1MiB 512MiB")
-        os.system("parted " + disk + " set 1 esp on")
-        os.system("parted " + disk + " mkpart primary ext4 512MiB 100%")
-        os.system("parted " + disk + " mkpart primary linux-swap 0 " + swap_size + "G")
-        os.system("parted " + disk + " set 3 swap on")
+        os.system("parted " + disk_name + " mklabel gpt")
+        os.system("parted " + disk_name + " mkpart primary fat32 1MiB 512MiB")
+        os.system("parted " + disk_name + " set 1 esp on")
+        os.system("parted " + disk_name + " mkpart primary ext4 512MiB 100%")
+        os.system("parted " + disk_name + " mkpart primary linux-swap 0 " + swap_size + "G")
+        os.system("parted " + disk_name + " set 3 swap on")
         #format the partitions
-        os.system("mkfs.fat -F32 " + disk + "1")
-        os.system("mkfs.ext4 " + disk + "2")
-        os.system("mkswap " + disk + "3")
-        os.system("swapon " + disk + "3")
+        os.system("mkfs.fat -F32 " + disk_name + "1")
+        os.system("mkfs.ext4 " + disk_name + "2")
+        os.system("mkswap " + disk_name + "3")
+        os.system("swapon " + disk_name + "3")
         #mount the partitions
-        os.system("mount " + disk + "2 /mnt")
+        os.system("mount " + disk_name + "2 /mnt")
         os.system("mkdir /mnt/boot")
-        os.system("mount " + disk + "1 /mnt/boot")
+        os.system("mount " + disk_name + "1 /mnt/boot")
 
     #make partitions automatically using parted and dos
     def make_partitions_automatically_dos():
         disk = DISKTOINSTALL.choose_disk()
+        disk_name = disk[:-1]
+
         print("Making partitions automatically with dos")
         #ask for swap size 
         print("Enter swap size in GB")
         print("Swap is a partition that is used as virtual memory")
         swap_size = input("Swap size: ")
         #make the partitions
-        os.system("parted " + disk + " mklabel msdos")
-        os.system("parted " + disk + " mkpart primary ext4 1MiB 100%")
-        os.system("parted " + disk + " mkpart primary linux-swap 0 " + swap_size + "G")
-        os.system("parted " + disk + " set 2 swap on")
+        os.system("parted " + disk_name + " mklabel msdos")
+        os.system("parted " + disk_name + " mkpart primary ext4 1MiB 100%")
+        os.system("parted " + disk_name + " mkpart primary linux-swap 0 " + swap_size + "G")
+        os.system("parted " + disk_name + " set 2 swap on")
         #format the partitions
-        os.system("mkfs.ext4 " + disk + "1")
-        os.system("mkswap " + disk + "2")
-        os.system("swapon " + disk + "2")
+        os.system("mkfs.ext4 " + disk_name + "1")
+        os.system("mkswap " + disk_name + "2")
+        os.system("swapon " + disk_name + "2")
         #mount the partitions
-        os.system("mount " + disk + "1 /mnt")
+        os.system("mount " + disk_name + "1 /mnt")
