@@ -26,7 +26,7 @@ class DISKTOINSTALL:
 
     #get disk from the function above and make user choose which disk to install on
     def choose_disk():
-        disks = DISKTOINSTALL.get_disks(disk)
+        disks = DISKTOINSTALL.get_disks()
         print("Choose a disk to install on: ")
         for i in range(len(disks)):
             print(str(i) + ": " + disks[i])
