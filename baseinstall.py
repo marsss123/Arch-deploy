@@ -22,8 +22,8 @@ class ArchInstall:
         else:
             print("Invalid answer")
             ArchInstall.choose_kernel()
-        #save kernel to variable
-        return kernel
+        kernel_to_install = kernel
+        
         
 
     def headers():
