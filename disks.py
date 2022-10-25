@@ -21,8 +21,7 @@ class DISKTOINSTALL:
                 print("No disks found")
                 exit()
         return disks
-       #print(disks)
-        print("Disks found: " + str(len(disks)))
+       
 
     #get disk from the function above and make user choose which disk to install on
     def choose_disk():
@@ -31,7 +30,7 @@ class DISKTOINSTALL:
         for i in range(len(disks)):
             print(str(i) + ": " + disks[i])
         disk = disks[int(input("Disk: "))]
-        return disk
+        
 
     #ask user if he wants to make the partitions himself or let the script do it
     def make_partitions():
