@@ -1,3 +1,4 @@
+from glob import glob
 import os
 
 class DISKTOINSTALL:
@@ -25,12 +26,12 @@ class DISKTOINSTALL:
 
     #get disk from the function above and make user choose which disk to install on
     def choose_disk():
-        disks = DISKTOINSTALL.get_disks()
+        disks = DISKTOINSTALL.get_disks(disk)
         print("Choose a disk to install on: ")
         for i in range(len(disks)):
             print(str(i) + ": " + disks[i])
         disk = disks[int(input("Disk: "))]
-        
+        return disk 
 
     #ask user if he wants to make the partitions himself or let the script do it
     def make_partitions():
@@ -49,7 +50,8 @@ class DISKTOINSTALL:
 
     #make partitions manually using cfdisk or fdisk based on user input
     def make_partitions_manually():
-        disk = DISKTOINSTALL.choose_disk()
+
+        disk = DISKTOINSTALL.choose_disk(disk)
         print("Making partitions manually")
         print("Do you want to use cfdisk or fdisk? (c/f)")
         answer = input("Answer: ")
@@ -62,7 +64,7 @@ class DISKTOINSTALL:
             DISKTOINSTALL.make_partitions_manually()
         
     #make partitions automatically using parted
-    def make_partitions_automatically():
+    def make_partitions_automatically(disk):
         #ask if the user want to user efi or dos
         print("Do you want to use efi or dos? (e/d)")
         answer = input("Answer: ")
@@ -76,7 +78,7 @@ class DISKTOINSTALL:
 
     #make partitions automatically using parted and efi
     def make_partitions_automatically_efi():
-        disk = DISKTOINSTALL.choose_disk()
+        disk = DISKTOINSTALL.choose_disk(disk)
         print("Making partitions automatically with efi")
         #ask for swap size 
         print("Enter swap size in GB")
@@ -101,7 +103,7 @@ class DISKTOINSTALL:
 
     #make partitions automatically using parted and dos
     def make_partitions_automatically_dos():
-        disk = DISKTOINSTALL.choose_disk()
+        disk = DISKTOINSTALL.choose_disk(disk)
         print("Making partitions automatically with dos")
         #ask for swap size 
         print("Enter swap size in GB")
