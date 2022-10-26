@@ -6,7 +6,13 @@ class PostBaseInstall:
     
     #this function is for chrooting into /mnt and continiu the installation
     def chroot():
-        subprocess.call(['arch-chroot', '/mnt'])
+        os.chdir('/mnt')
+        os.system('mount -t proc /proc proc/')
+        os.system('mount --rbind /sys sys/')
+        os.system('mount --rbind /dev dev/')
+        os.system('mount --rbind /run run/')
+        os.system('cp /etc/resolv.conf /mnt/etc/resolv.conf')
+        os.system('chroot /mnt /bin/bash -c "python3 /Postbase.py"') 
         PostBaseInstall.add_user()
         PostBaseInstall.choose_bootloader()
         PostBaseInstall.networkmanager()
@@ -26,7 +32,7 @@ class PostBaseInstall:
         os.system('usermod -aG wheel,audio,video,optical,storage' + username)
         #enable sudo on wheel group
         os.system('sed -i'+ "'s/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g'"+ '/etc/sudoers')
-    #set timezone based on user input
+        #set timezone based on user input
         print("Choose a timezone: ")
         os.system('ls', '/usr/share/zoneinfo')
         timezone = input("Timezone: ")
