@@ -122,9 +122,7 @@ class PostBaseInstall:
         #install yay
         username = PostBaseInstall.add_user()
         os.system('su' + username)
-        #remove username: from username
         username = username[9:]
-
         os.system('git clone https://aur.archlinux.org/yay.git')
         os.chdir('yay')
         os.system('makepkg -si')
