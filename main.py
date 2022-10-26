@@ -14,8 +14,9 @@ class main():
     ArchInstall.base_system()
     #POST BASE INSTALL
     PostBaseInstall()
-    #chroot
-    subprocess.check_call(f"/usr/bin/arch-chroot /mnt", shell=True)
+    #make the program chroot /mnt and continue the installation
+    PostBaseInstall.chroot()
+    #on chroot environment
     PostBaseInstall.add_user()
     PostBaseInstall.PacmanInst()
     PostBaseInstall.installAur()
