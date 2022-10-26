@@ -1,5 +1,4 @@
 import subprocess
-import imp
 import os
 from disks import DISKTOINSTALL
 class PostBaseInstall:
@@ -32,11 +31,7 @@ class PostBaseInstall:
         os.system('usermod -aG wheel,audio,video,optical,storage' + username)
         #enable sudo on wheel group
         os.system('sed -i'+ "'s/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g'"+ '/etc/sudoers')
-        #set timezone based on user input
-        print("Choose a timezone: ")
-        os.system('ls', '/usr/share/zoneinfo')
-        timezone = input("Timezone: ")
-        os.system('ln -sf /usr/share/zoneinfo/' + timezone + '/etc/localtime')
+        os.system('ln -sf /usr/share/zoneinfo/Europe/Athens /etc/localtime')
         #set hardware clock
         os.system('hwclock --systohc')
         #set locale
