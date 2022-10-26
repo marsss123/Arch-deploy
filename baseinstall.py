@@ -32,7 +32,7 @@ class ArchInstall:
         #create fstab
         os.system('genfstab -U /mnt >> /mnt/etc/fstab')
         #chroot
-        subprocess.Popen('arch-chroot /mnt ')
+        subprocess.call('arch-chroot /mnt ')
         #set timezone based on user input
         print("Choose a timezone: ")
         os.system('ls', '/usr/share/zoneinfo')
