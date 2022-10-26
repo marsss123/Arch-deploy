@@ -97,7 +97,7 @@ class PostBaseInstall:
     def PacmanInst():
         #install 
         PKGS='zip zsh zsh-completions wget unrar unzip bashtop hardinfo neofetch numlockx xfce4-power-manager xfce4-appfinder rofi xorg-fonts-type1 ttf-liberation ttf-dejavu ttf-bitstream-vera sdl_ttf gsfonts font-bh-ttf autofs exfat-utils ntfs-3g terminator catfish nemo variety feh network-manager-applet xfce4-settings-manager scrot xfce4-screenshooter lxappearance gst-plugins-base gst-plugins-good gst-plugins-ugly gst-plugins-bad gst-libav obs-studio git vlc xfce4-screenshooter xpdf vim i3-gaps sddm'
-        os.system('pacman', '-S', PKGS)          
+        os.system('pacman -S' + PKGS)          
         os.system('systemctl enable sddm')
         os.system('systemctl enable autofs')
 
