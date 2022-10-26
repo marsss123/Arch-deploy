@@ -7,13 +7,10 @@ from Postbase import PostBaseInstall
 class main():
     #DISK PARTITIONING
     DISKTOINSTALL()
-    DISKTOINSTALL.get_disks()
-    DISKTOINSTALL.choose_disk()
-    DISKTOINSTALL.make_partitions_automatically()
+    DISKTOINSTALL.make_partitions()
     
     #BASE INSTALL
     ArchInstall()
-    ArchInstall.choose_kernel()
     ArchInstall.base_system()
     ArchInstall.choose_bootloader()
     ArchInstall.networkmanager()
