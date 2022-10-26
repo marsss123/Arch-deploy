@@ -16,14 +16,6 @@ class main():
     PostBaseInstall()
     #make the program chroot /mnt and continue the installation
     PostBaseInstall.chroot()
-    #on chroot environment
-    PostBaseInstall.add_user()
-    PostBaseInstall.PacmanInst()
-    PostBaseInstall.installAur()
-    PostBaseInstall.installAurPackages()
-    PostBaseInstall.installDotFiles()
-    PostBaseInstall.installGTK()
-    PostBaseInstall.installIcons()
 
 if __name__ == "__main__":
     main()

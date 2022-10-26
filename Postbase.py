@@ -7,6 +7,16 @@ class PostBaseInstall:
     #this function is for chrooting into /mnt and continiu the installation
     def chroot():
         subprocess.call(['arch-chroot', '/mnt'])
+        PostBaseInstall.add_user()
+        PostBaseInstall.choose_bootloader()
+        PostBaseInstall.networkmanager()
+        PostBaseInstall.PacmanInst()
+        PostBaseInstall.installAur()
+        PostBaseInstall.installAurPackages()
+        PostBaseInstall.installDotFiles()
+        PostBaseInstall.installGTK()
+        PostBaseInstall.installIcons()
+        os.system('exit')
     #add user
     def add_user():
         print("Enter username: ")
