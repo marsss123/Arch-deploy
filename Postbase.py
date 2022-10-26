@@ -38,7 +38,7 @@ class PostBaseInstall:
         print("Choose a locale: ") 
         os.system('ls /etc/locale.gen')
         locale = input("Locale: ")
-        os.system('sed -i' + "'s/#" + locale + "/" + locale + "/g'", '/etc/locale.gen')
+        os.system('sed -i' + "'s/#" + locale + "/" + locale + "/g'" + '/etc/locale.gen')
         os.system('locale-gen')
         os.system('echo LANG=' + locale + '> /etc/locale.conf')
         #set hostname
@@ -96,7 +96,7 @@ class PostBaseInstall:
 
     def PacmanInst():
         #install 
-        PKGS='zip','zsh','zsh-completions','wget','unrar','unzip','bashtop','hardinfo','neofetch','numlockx','xfce4-power-manager','xfce4-appfinder','rofi','xorg-fonts-type1','ttf-liberation','ttf-dejavu','ttf-bitstream-vera','sdl_ttf','gsfonts','font-bh-ttf','autofs','exfat-utils','ntfs-3g','terminator','catfish','nemo','variety','feh','network-manager-applet','xfce4-settings-manager','scrot','xfce4-screenshooter','lxappearance','gst-plugins-base','gst-plugins-good','gst-plugins-ugly','gst-plugins-bad','gst-libav','obs-studio','git','vlc','xfce4-screenshooter','xpdf','vim','i3-gaps','sddm'
+        PKGS='zip zsh zsh-completions wget unrar unzip bashtop hardinfo neofetch numlockx xfce4-power-manager xfce4-appfinder rofi xorg-fonts-type1 ttf-liberation ttf-dejavu ttf-bitstream-vera sdl_ttf gsfonts font-bh-ttf autofs exfat-utils ntfs-3g terminator catfish nemo variety feh network-manager-applet xfce4-settings-manager scrot xfce4-screenshooter lxappearance gst-plugins-base gst-plugins-good gst-plugins-ugly gst-plugins-bad gst-libav obs-studio git vlc xfce4-screenshooter xpdf vim i3-gaps sddm'
         os.system('pacman', '-S', PKGS)          
         os.system('systemctl enable sddm')
         os.system('systemctl enable autofs')
@@ -125,7 +125,7 @@ class PostBaseInstall:
         os.system('git clone https://aur.archlinux.org/yay.git')
         os.chdir('yay')
         os.system('makepkg -si')
-        os.system('pacman -S yay*')
+        os.system('pacman -U yay*')
         os.chdir('..')
         os.system('rm -rf yay')
         os.system('exit')
@@ -137,7 +137,7 @@ class PostBaseInstall:
         os.system('git clone https://aur.archlinux.org/trizen.git')
         os.chdir('trizen')
         os.system('makepkg -si')
-        os.system('pacman -S trizen*')
+        os.system('pacman -U trizen*')
         os.chdir('..')
         os.system('rm -rf trizen')
         os.system('exit')
@@ -149,12 +149,13 @@ class PostBaseInstall:
         os.system('git clone https://aur.archlinux.org/paru.git')
         os.chdir('paru')
         os.system('makepkg -si')
+        os.system('pacman -U paru*')
         os.chdir('..')
         os.system('rm -rf paru')
         os.system('exit')
 
     def installAurPackages():
-        PKGS1='visual-studio-code-bin','spotify','discord','telegram-desktop','zoom','google-chrome','polybar','networkmanager-dmenu-git','arc-gtk-theme','arc-icon-theme','papirus-icon-theme','papirus-folders','papirus-maia-icon-theme','papirus-maia-folders','papirus-maia-git','papirus-maia-icon-theme-git','nerd-fonts-iosevka','ttf-icomoon-feather','ttf-material-icons-git','siji-git','ttf-font-awesome','ttf-joypixels','ttf-nerd-fonts-symbols','ttf-ms-fonts'
+        PKGS1='visual-studio-code-bin  spotify  discord  telegram-desktop  zoom  google-chrome  polybar  networkmanager-dmenu-git  arc-gtk-theme  arc-icon-theme''papirus-icon-theme  papirus-folders  papirus-maia-icon-theme  papirus-maia-folders  papirus-maia-git  papirus-maia-icon-theme-git  nerd-fonts-iosevka  ttf-icomoon-feather  ttf-material-icons-git  siji-git  ttf-font-awesome  ttf-joypixels  ttf-nerd-fonts-symbols  ttf-ms-fonts'
         aur_helper = PostBaseInstall.installAur()
         if aur_helper == "yay":
             os.system('yay -S' + PKGS1)
