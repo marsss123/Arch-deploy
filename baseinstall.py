@@ -1,4 +1,5 @@
 import os 
+import subprocess
 from disks import DISKTOINSTALL
 
 class ArchInstall:
@@ -31,7 +32,7 @@ class ArchInstall:
         #create fstab
         os.system('genfstab -U /mnt >> /mnt/etc/fstab')
         #chroot
-        os.system('arch-chroot /mnt /bin/bash -c "su - -c ./yourscript.sh"')
+        subprocess.Popen('arch-chroot /mnt ')
         #set timezone based on user input
         print("Choose a timezone: ")
         os.system('ls', '/usr/share/zoneinfo')
