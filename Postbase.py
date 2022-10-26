@@ -122,6 +122,9 @@ class PostBaseInstall:
         #install yay
         username = PostBaseInstall.add_user()
         os.system('su' + username)
+        #remove username: from username
+        username = username[9:]
+
         os.system('git clone https://aur.archlinux.org/yay.git')
         os.chdir('yay')
         os.system('makepkg -si')
@@ -133,6 +136,7 @@ class PostBaseInstall:
     def trizen():
         #install trizen
         username = PostBaseInstall.add_user()
+        username = username[9:]
         os.system('su' + username)
         os.system('git clone https://aur.archlinux.org/trizen.git')
         os.chdir('trizen')
@@ -146,6 +150,7 @@ class PostBaseInstall:
         #install paru
         username = PostBaseInstall.add_user()
         os.system('su' + username)
+        username = username[9:]
         os.system('git clone https://aur.archlinux.org/paru.git')
         os.chdir('paru')
         os.system('makepkg -si')
@@ -169,6 +174,7 @@ class PostBaseInstall:
     def installDotFiles():
         #install dotfiles
         username = PostBaseInstall.add_user()
+        username = username[9:]
         os.system('su', username)
         os.system('git clone --depth=1 https://github.com/adi1090x/polybar-themes.git')
         os.chdir('dotfiles')
@@ -204,6 +210,7 @@ class PostBaseInstall:
     def installIcons():
         #install nordic icons
         username = PostBaseInstall.add_user()
+        username = username[9:]
         os.system('su' + username)
         os.system('wget https://github.com/EliverLara/Nordic/releases/download/v2.2.0/Nordic-darker.tar.xz')
         os.system('tar -xf Nordic-darker.tar.xz -C ~/.icons/')
