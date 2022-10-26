@@ -1,5 +1,5 @@
 import os 
-
+import subprocess
 from disks import DISKTOINSTALL
 from baseinstall import ArchInstall
 from Postbase import PostBaseInstall
@@ -12,10 +12,10 @@ class main():
     #BASE INSTALL
     ArchInstall()
     ArchInstall.base_system()
-    ArchInstall.choose_bootloader()
-    ArchInstall.networkmanager()
     #POST BASE INSTALL
     PostBaseInstall()
+    #chroot
+    subprocess.check_call(f"/usr/bin/arch-chroot /mnt", shell=True)
     PostBaseInstall.add_user()
     PostBaseInstall.PacmanInst()
     PostBaseInstall.installAur()
