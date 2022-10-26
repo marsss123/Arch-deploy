@@ -82,27 +82,33 @@ class DISKTOINSTALL:
         answer = input("Answer: ")
         if answer == "c":
             os.system("cfdisk " + disk_name)
+            #format the partitions
+            os.system("mkfs.fat -F32 " + disk_name + "1")
+            os.system("mkfs.ext4 " + disk_name + "2")
+            os.system("mkswap " + disk_name + "3")
+            os.system("swapon " + disk_name + "3")
+            #mount the partitions
+            os.system("mount " + disk_name + "2 /mnt")
+            os.system("mkdir /mnt/boot")
+            os.system("mount " + disk_name + "1 /mnt/boot")
         elif answer == "f":
             os.system("fdisk " + disk_name)
+            #format the partitions
+            os.system("mkfs.fat -F32 " + disk_name + "1")
+            os.system("mkfs.ext4 " + disk_name + "2")
+            os.system("mkswap " + disk_name + "3")
+            os.system("swapon " + disk_name + "3")
+            #mount the partitions
+            os.system("mount " + disk_name + "2 /mnt")
+            os.system("mkdir /mnt/boot")
+            os.system("mount " + disk_name + "1 /mnt/boot")
+
         else:
             print("Invalid answer")
             DISKTOINSTALL.make_partitions_manually()
         
-    #make partitions automatically using parted
-    def make_partitions_automatically():
-        #ask if the user want to user efi or dos
-        print("Do you want to use efi or dos? (e/d)")
-        answer = input("Answer: ")
-        if answer == "e":
-            DISKTOINSTALL.make_partitions_automatically_efi()
-        elif answer == "d":
-            DISKTOINSTALL.make_partitions_automatically_dos()
-        else:
-            print("Invalid answer")
-            DISKTOINSTALL.make_partitions_automatically()
-
     #make partitions automatically using parted and efi
-    def make_partitions_automatically_efi():
+    def make_partitions_automatically():
         disk = DISKTOINSTALL.choose_disk()
         #save the disk name without the number
         disk_name = disk[:-1]
@@ -110,7 +116,6 @@ class DISKTOINSTALL:
         #ask for swap size 
         print("Enter swap size in GB")
         print("Swap is a partition that is used as virtual memory")
-        
         swap_size = input("Swap size: ")
         #make the partitions
         os.system("parted " + disk_name + " mklabel gpt")
@@ -129,24 +134,4 @@ class DISKTOINSTALL:
         os.system("mkdir /mnt/boot")
         os.system("mount " + disk_name + "1 /mnt/boot")
 
-    #make partitions automatically using parted and dos
-    def make_partitions_automatically_dos():
-        disk = DISKTOINSTALL.choose_disk()
-        disk_name = disk[:-1]
-
-        print("Making partitions automatically with dos")
-        #ask for swap size 
-        print("Enter swap size in GB")
-        print("Swap is a partition that is used as virtual memory")
-        swap_size = input("Swap size: ")
-        #make the partitions
-        os.system("parted " + disk_name + " mklabel msdos")
-        os.system("parted " + disk_name + " mkpart primary ext4 1MiB 100%")
-        os.system("parted " + disk_name + " mkpart primary linux-swap 0 " + swap_size + "G")
-        os.system("parted " + disk_name + " set 2 swap on")
-        #format the partitions
-        os.system("mkfs.ext4 " + disk_name + "1")
-        os.system("mkswap " + disk_name + "2")
-        os.system("swapon " + disk_name + "2")
-        #mount the partitions
-        os.system("mount " + disk_name + "1 /mnt")
+    

@@ -9,7 +9,7 @@ class main():
     DISKTOINSTALL()
     DISKTOINSTALL.get_disks()
     DISKTOINSTALL.choose_disk()
-    DISKTOINSTALL.make_partitions()
+    DISKTOINSTALL.make_partitions_automatically()
     
     #BASE INSTALL
     ArchInstall()
